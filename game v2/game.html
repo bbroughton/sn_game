@@ -1,0 +1,133 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+	<title>Phaser - Making your first game, part 1</title>
+	<script type="text/javascript" src="js/phaser.min.js"></script>
+	<script type="text/javascript" src="js/phaser_game.js"></script>
+	<script type="text/javascript" src="js/lvldata.js"></script>
+	<link rel = "stylesheet" type = "text/css" href ="modals.css">
+	<span style="font-family: 'Raleway', sans-serif; display: none;">&nbsp;</span>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<!-- Modals -->
+	<div id = 'welcome-modal' style = "display: none;">
+		<div class = 'textbox'>
+			<p>Space Network Game...</p>
+			<button id = 'go-to-instructions'>How To Play</button>
+		</div>
+	</div>
+	<div id = 'instructions-modal' style = "display: none;">
+		<div class = 'textbox'>
+			<div class = 'inst1'>
+				<p>
+					TDRS (Tracking and Data Relay Satellites) , positioned above the Earth in geosynchronous orbit, provide continuos communication to satellites and serve as a relay between ground stations and these satellites. Although these communciation are regularly sheculed, it is your job in this game to direct signals from a TDRS to passing satellites.
+				</p>
+				<p>
+					Use the mouse or the LEFT and RIGHT arrow keys to rotate the TDRS and aim at passing satellites.
+					<img class = "inst-img tdrs-img" src = "assets/img/tdrs_1_2.svg"/>
+					Use the left click or SPACE button to send a communication signal
+					<img class = "inst-img wave-img"  src = "assets/img/waves2.png"/>
+					<img class = "inst-img sat-img"  src = "assets/img/sat2.svg"/> Each satellite is worth 1 point.
+
+					Your score will be displayed in this bar on the screen:
+					<img class = "inst-img prog-img"  src = "assets/img/prog_bar.png"/>
+					When your score reached 100%, you will move on to the next level and be able to control the next TDRS satellite!
+
+				</p>
+				<button id = "continue"> Continue </button>
+			</div>
+		</div>
+	</div>
+	<div id = "about-TDRS-modal" style = "display: none;">
+		<div id = "insert-txt"></div>
+		<button id = "play"> Play </button>
+	</div>
+	<div id = 'first-hit-modal' style = "display: none;">
+		<p>
+				You just relayed data from a ground station, through a TDRS to a satellite!
+
+				<img class= "ground-station-info" src = "assets/img/antenna.svg"/>
+
+			    The tandem RF/optical signal path from an SN Ground Segment terminal through a relay satellite and on to a customer/user platform is referred to as a forward link.  The tandem RF/optical signal path from a customer/user platform to the relay satellite and back to a ground terminal is referred to as a return link.
+		</p>
+		<button id = "cont"> Keep Playing </button>
+	</div>
+	<div id = 'first-hit-hubble-modal' style = "display: none;">
+		<p>
+				You just relayed data from a ground station, through a TDRS to Hubble Space Telescope!
+
+				<img class= "hubble-info" src = "assets/img/hubble2.svg"/>
+
+			    Hubble is one of many satellites which TDRS communicate with. Hubble is the first major optical telescope to be placed in space. Above the distortion of the atmosphere, far above rain clouds and light pollution, Hubble has an unobstructed view of the universe. Scientists have used Hubble to observe the most distant stars and galaxies as well as the planets in our solar system.
+
+		</p>
+		<button id = "hubble-cont"> Keep Playing </button>
+	</div>
+		<div id = 'first-hit-iss-modal' style = "display: none;">
+		<p>
+				You just relayed data from a ground station, through a TDRS to Hubble Space Telescope!
+
+				<img class= "iss-info" src = "assets/img/ISS2.svg"/>
+
+			    Hubble is one of many satellites which TDRS communicate with.The International Space Station is a large spacecraft which orbits around Earth. It is a home to astronauts as well
+				as a science lab. Many countries worked together to build it and work together to use it.
+
+				The space station is made of many pieces, which were put together in space by astronauts. The space station's orbit is about 220 miles above Earth. NASA uses the station to learn about living and working in space. These lessons will help NASA explore space.
+		</p>
+		<button id = "iss-cont"> Keep Playing </button>
+	</div>
+	<div id = 'first-hit-hubble-modal' style = "display: none;">
+		<p>
+				You just relayed data from a ground station, through a TDRS to hubble!
+
+				TDRS enables the succes of various missions and satellites including hubble by relaying data to and from them.
+
+				<img src = 'assets/img/hubble2.svg'/>
+
+			    The tandem RF/optical signal path from an SN Ground Segment terminal through a relay satellite and on to a customer/user platform is referred to as a forward link.  The tandem RF/optical signal path from a customer/user platform to the relay satellite and back to a ground terminal is referred to as a return link.
+		</p>
+		<button id = "cont"> Keep Playing </button>
+	</div>
+	<div id = 'pop-quiz_modal' style = "display: none;"></div>
+	<div id = 'level_modal' style = "display: none;">
+		<p>Good job! You successfuly realyed data to enough satellites to level up to the next TDRS...</p>
+		<button id = 'next-to-level' >Next</button>
+	</div>
+	<div id = 'game_over_modal' style = "display: none;">
+		<p>Game Over!</p>
+		<p>You let too many satellites go by without relaying data!</p>
+		<p>Would you like to play again?</p>
+		<button id = "restart">Restart</button>
+	</div>
+	<div id = "gen-1-info-modal" style = "display: none;">
+		<p>
+			NASA developed the Tracking and Data Relay Satellites (TDRS) to provide nearly continuous, around-the-clock communications coverage for spacecraft in low-Earth orbit. By the 1970s when the project began in earnest, more than 50 spacecraft required NASA space communications support. The cost of maintaining ground stations was rising and the ground-based networks only achieved coverage during about 15 percent of a spacecraft’s orbit. NASA needed a more efficient network, and they theorized space-based satellites could help resolve these challenges.
+		</p>
+		<img class = "gen-img"  src = "assets/img/gen-1-facts.png"/>
+		<button id = "next-to-info">Next</button>
+	</div>
+	<div id = "gen-2-info-modal" style = "display: none;">
+		<p>
+			Shortly after the completion of TDRS’s first-generation constellation, the team commissioned a second generation of satellites to implement new technology and to support customers’ evolving requirements. Improvements in data-collection technology required higher-bandwidth connections capable of delivering larger volumes of data per second. TDRS H, I and J would not succeed the first generation of satellites, but join them, expanding the capabilities of the fleet.
+        	With new components and systems, the team increased data rates to more than 30 times that of the first-generation fleet and increased power transmission significantly. Ka-band capability was also added, enabling much larger transmissions and international compatibility with European and Japanese systems in case of emergencies. These spacecraft launched between 2000 and 2002, and all three continue to operate to this day. 
+		</p>
+		<img class = "gen-img"  src = "assets/img/gen-2-facts.png"/>
+		<button id = "next-to-info">Next</button>
+	</div>
+	<div id = "gen-3-info-modal" style = "display: none;">
+			<p>
+			As NASA began to decommission the first generation of TDRS spacecraft shortly before 2010, the agency commissioned a third generation of spacecraft to replenish the fleet, ensuring its continued operations and reliability for years to come.";
+	        With more data moving today than ever before, the new spacecraft must be able to support higher data volumes and increased transmission rates. The team must also improve the agility of the system overall. The third TDRS generation uses ground-based beam-forming, a departure from the system used in the second generation. Ground-based beam-forming provides more flexible communications services and even the ability to tailor services for each customer. The first third-generation spacecraft, TDRS-K, launched in 2013, and the final one, TDRS-M, is expected to launch in 2017. 
+		</p>
+		<img class = "gen-img"  src = "assets/img/gen-2-facts.png"/>
+		<button id = "next-to-info">Next</button>
+	</div>
+	
+</body>
+</html>
