@@ -1,12 +1,4 @@
-
-//pop up quizzes at 25 and 75 percent
-
-//special level ups
-
-//fix modal styles
-
-
-
+//add key and mouse
 
 var canvasWidth  = document.documentElement.clientWidth;
 var canvasHeight = document.documentElement.clientHeight;
@@ -14,17 +6,22 @@ var canvasHeight = document.documentElement.clientHeight;
 
 var game = new Phaser.Game(canvasWidth,canvasHeight, Phaser.AUTO, 'phaser-demo', {preload: preload, create: create, update: update, render: render});
 
-
-var signals;
-var fireRate = 600;
-var score = 50;
-var nextFire = 0;
 var lvl = 0;
+var score = 0;
+var fireRate = 600;
+var nextFire = 800;
+
+var min_sat_space = 400;
+var max_sat_space = 4000;
+
 var first_hit = true;
 var first_hit_iss = false;;
 var first_hit_hubble = false;
 var intro = false;
+var quiz = true;
+var questionDiv;
 
+var signals;
 var sat_speed;
 var tutorialmessage;
 var tdrs_img;
@@ -39,6 +36,8 @@ var channel_1 = (game.height * 7/20);
 var channel_2 = (game.height * 10/20 ) ;
 var channel_3 = (game.height *13/20);
 var channel_4 = (game.height *16/20)  ;
+
+
 
 function preload() {
 
@@ -76,7 +75,7 @@ function create() {
     background.y = 0;
     background.height = canvasHeight;
     background.width = canvasWidth;
-    console.log(canvasWidth + " " + canvasHeight);
+    console.log(canvasWidth + ' ' + canvasHeight);
 
     //altitude indications
 
@@ -90,8 +89,8 @@ function create() {
     graphics.lineTo(game.width , tdrs_y +20);
     
     
-    var geosynchronous = "geosynchronous orbit";
-    var style = { font: "italic 25px Arial", fill: "#ffffff", align: "center" };
+    var geosynchronous = 'geosynchronous orbit';
+    var style = { font: 'italic 25px Arial', fill: '#ffffff', align: 'center' };
      
 
     game.add.text(game.width *0.62 , tdrs_y, geosynchronous, style);
@@ -113,7 +112,7 @@ function create() {
     signals = game.add.group();
     signals.enableBody = true;
     signals.physicsBodyType = Phaser.Physics.ARCADE;
-    signals.createMultiple(50, 'signal');
+    signals.createMultiple(5, 'signal');
     signals.setAll('checkWorldBounds', true);
     signals.setAll('outOfBoundsKill', true);
     signals.forEach(function(enemy){
@@ -125,7 +124,7 @@ function create() {
      glow = game.add.group();
      glow.enableBody = true;
      glow.physicsBodyType = Phaser.Physics.ARCADE;
-     glow.createMultiple(20,'purple');
+     glow.createMultiple(50,'purple');
      glow.setAll('anchor.x', 0.5);
      glow.setAll('anchor.y', 0.5);
      glow.setAll('width', game.width/8);
@@ -144,7 +143,7 @@ function create() {
      satellites = game.add.group();
      satellites.enableBody = true;
      satellites.physicsBodyType = Phaser.Physics.ARCADE;
-     satellites.createMultiple(20,'sattelite');
+     satellites.createMultiple(50,'sattelite');
      satellites.setAll('anchor.x', 0.5);
      satellites.setAll('anchor.y', 0.5);
      satellites.setAll('width', game.width/12);
@@ -184,11 +183,7 @@ function create() {
 
 
 function launchsat1() {
-    var min_sat_space = 400;
-    var max_sat_space = 4000;
-    
 
-    
     var newGlow = glow.getFirstExists(false);
     newGlow.reset(-15, channel_1);
     var newSat = satellites.getFirstExists(false);
@@ -219,9 +214,6 @@ function launchsat1() {
 
  }
 function launchsat2() {
-    var min_sat_space = 600;
-    var max_sat_space = 5000;
-    
 
     var newGlow = glow.getFirstExists(false);
     newGlow.reset(0, channel_2);
@@ -238,7 +230,7 @@ function launchsat2() {
     if(iss){
         var chooser = Math.random();
         if(chooser > 0.85){
-            newSat.loadTexture("iss"); // = satellites.create(0, channel_2, "iss");
+            newSat.loadTexture('iss'); // = satellites.create(0, channel_2, 'iss');
             newSat.width = game.width / 11;
             newSat.height = game.width / 11;
             newGlow.damageAmount = 10;
@@ -265,9 +257,6 @@ function launchsat2() {
 
  }
 function launchsat3() {
-    var min_sat_space = 500;
-    var max_sat_space = 5000;
-   
 
     var newGlow = glow.getFirstExists(false);
     newGlow.reset(0, channel_3);
@@ -289,7 +278,7 @@ function launchsat3() {
         var chooser = Math.random();
     
         if(chooser > 0.85){
-            newSat.loadTexture("hubble"); // = satellites.create(0, channel_2, "iss");
+            newSat.loadTexture('hubble'); // = satellites.create(0, channel_2, 'iss');
             newSat.width = game.width / 12;
             newSat.height = game.width / 12;
             newSat.angle = 180;
@@ -316,9 +305,6 @@ function launchsat3() {
 
  }
 function launchsat4() {
-    var min_sat_space = 300;
-    var max_sat_space = 5000;
-    
 
     var newGlow = glow.getFirstExists(false);
     newGlow.reset(0, channel_4);
@@ -358,7 +344,7 @@ function update() {
 
     if(intro == false){
         var div =document.getElementById('insert-txt');
-        div.innerHTML +=  '<p> ' + title + '<br>' + tutorialmessage + ' </p>' + "<img class = \'tdrs-img\' src =\'" + tdrs_img + "\'\\>";
+        div.innerHTML +=  '<p> ' + title + '<br>' + tutorialmessage + ' </p>' + '<img class = \'tdrs-img\' src =\'' + tdrs_img + '\'\\>';
         modal(gen_modal, 'play', 'about-TDRS-modal', 'next-to-info');
         intro = true;
     }
@@ -383,6 +369,10 @@ function update() {
             levelUp(lvl);
         }
     }
+    if(score == 50 && quiz == true){
+        popQuiz();
+        quiz = false;
+    }
     //control tdrs with mouse
     tdrs.rotation = game.physics.arcade.angleToPointer(tdrs);
     if (game.input.activePointer.isDown)
@@ -392,7 +382,7 @@ function update() {
     //control tdrs with keys
     //touch controls?
 
-    //"collision" between signals and satellites
+    //'collision' between signals and satellites
     game.physics.arcade.overlap(signals, glow, signalSuccess, 0, this);
     //make sure glow goes back to purple after going offscreen
     glow.forEach(function(enemy){
@@ -416,6 +406,24 @@ function glowOut(enemy){
     }
     
 }
+
+function fire() {
+
+    if (game.time.now > nextFire && signals.countDead() > 0)
+    {
+        nextFire = game.time.now + fireRate;
+
+        var signal = signals.getFirstDead();
+
+        signal.reset(tdrs.x , tdrs.y );
+        signal.width = 150;
+        signal.height= 40;
+        signal.rotation = game.physics.arcade.angleToPointer(tdrs);
+        game.physics.arcade.moveToPointer(signal, 500);
+    }
+
+}
+
 function signalSuccess(signal, purple){
 
     purple.loadTexture('green');
@@ -443,31 +451,11 @@ function signalSuccess(signal, purple){
     purple.damageAmount = 0;
 }
 
-function fire() {
-
-    if (game.time.now > nextFire && signals.countDead() > 0)
-    {
-        nextFire = game.time.now + fireRate;
-
-        var signal = signals.getFirstDead();
-
-        signal.reset(tdrs.x , tdrs.y );
-        signal.width = 150;
-        signal.height= 40;
-        signal.rotation = game.physics.arcade.angleToPointer(tdrs);
-        game.physics.arcade.moveToPointer(signal, 500);
-    }
-
-}
 function modal(modal, bttn, nextModal, nextBttn){
     game.paused = true;
 
     var modal = document.getElementById(modal);
     modal.className = 'modal';
-
-    //make sure modal is not bigger than screen height
-    
-    modal.style.height = canvasHeight - 300;
 
     var positionInfo = modal.getBoundingClientRect();
     var width = positionInfo.width;
@@ -479,9 +467,9 @@ function modal(modal, bttn, nextModal, nextBttn){
             modal = document.getElementById(nextModal);
             modal.className = 'modal';
 
-            modal.style.height = canvasHeight - 300;
-        }
+        }    
     }
+
     var next = document.getElementById(bttn);
     next.onclick = function(){
         modal.className = '';
@@ -489,6 +477,39 @@ function modal(modal, bttn, nextModal, nextBttn){
         
     }
 }
+
+function popQuiz(){
+    modal('quiz_modal', 'backToGame');
+    var quizData = quizQuestions[lvl];
+    questionDiv = document.getElementById("insert-quiz");
+    questionDiv.innerHTML += '<p> ' +  quizData.question + ' </p> <form>' + quizQuestions[lvl].choice_1 +  quizQuestions[lvl].choice_2  +  quizQuestions[lvl].choice_3  + quizQuestions[lvl].choice_4 + '</form>';
+
+    var guess = document.getElementById('guessButton');
+    var backToGame = document.getElementById('backToGame');
+
+    guess.onclick = function(){
+
+        var playerGuess = document.querySelector('input[name = "answer"]:checked').id;
+
+        
+        if(playerGuess == quizQuestions[lvl].correct){
+            questionDiv.innerHTML += "<br> <p> <strong>Correct!</strong>   " + quizQuestions[lvl].answer + "</p>" + "<br><p>As a bonus for anwering correctly: </p>" + quizQuestions[lvl].boost_message;
+            quizQuestions[lvl].boost();
+        }
+        else{
+            questionDiv.innerHTML += "<br> <p> <strong>Wrong!</strong>   " + quizQuestions[lvl].answer+ "</p>";
+        }
+        document.getElementById(playerGuess).checked = true;
+        guess.style.display = 'none';
+        backToGame.style.display = 'block';
+        //game.time.events.add(Phaser.Timer.SECOND * quizQuestions[lvl].boost_time ,quizQuestions[lvl].unBoost());
+    }
+    
+
+    
+}
+
+
 function levelUp(lvl){ 
         
         var levelparams = LevelData[lvl];
@@ -510,10 +531,12 @@ function levelUp(lvl){
         score = levelparams.score;
         
         intro = false;
-
+        quiz = true;
         var div =document.getElementById('insert-txt');
         div.innerHTML = '';
+        questionDiv.innerHTML = '';
 }
+
 function render() {
    
 }

@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="js/setModalHeights.js"></script>
 	<script type="text/javascript" src="js/SN_game.js"></script>
 	<script type="text/javascript" src="js/lvldata.js"></script>
+	
 	<link rel = "stylesheet" type = "text/css" href ="assets/modals.css">
 
 	<span style="font-family: 'Raleway', sans-serif; display: none;">&nbsp;</span>
@@ -25,6 +26,8 @@
 			<button id = 'go-to-instructions'>How To Play</button>
 		</div>
 	</div>
+	
+
 	<div id = 'instructions-modal' class = 'setHeight' style = "display: none;">
 		<div class = 'textbox'>
 			<div class = 'inst1'>
@@ -47,10 +50,21 @@
 			</div>
 		</div>
 	</div>
+	
+
 	<div id = "about-TDRS-modal" class = 'setHeight' style = "display: none;">
 		<div id = "insert-txt"></div>
 		<button id = "play"> Play </button>
 	</div>
+	
+
+	<div id = "quiz_modal" style = "display: none;">
+		<div id = "insert-quiz"></div>
+		<button id = "guessButton"> Guess</button>
+		<button id = "backToGame" style = "display: none;"> Back to The Game</button>
+	</div>
+	
+
 	<div id = 'first-hit-modal' class = 'setHeight' style = "display: none;">
 		<p>
 				You just relayed data from a ground station, through a TDRS to a satellite!
@@ -61,6 +75,8 @@
 		</p>
 		<button id = "cont"> Keep Playing </button>
 	</div>
+	
+
 	<div id = 'first-hit-hubble-modal' class = 'setHeight' style = "display: none;">
 		<p>
 				You just relayed data from a ground station, through a TDRS to Hubble Space Telescope!
@@ -72,7 +88,9 @@
 		</p>
 		<button id = "hubble-cont"> Keep Playing </button>
 	</div>
-		<div id = 'first-hit-iss-modal' class = 'setHeight' style = "display: none;">
+	
+
+	<div id = 'first-hit-iss-modal' class = 'setHeight' style = "display: none;">
 		<p>
 				You just relayed data from a ground station, through a TDRS to Hubble Space Telescope!
 
@@ -85,29 +103,22 @@
 		</p>
 		<button id = "iss-cont"> Keep Playing </button>
 	</div>
-	<div id = 'first-hit-hubble-modal' class = 'setHeight' style = "display: none;">
-		<p>
-				You just relayed data from a ground station, through a TDRS to hubble!
+	
 
-				TDRS enables the succes of various missions and satellites including hubble by relaying data to and from them.
-
-				<img src = 'assets/img/hubble2.svg'/>
-
-			    The tandem RF/optical signal path from an SN Ground Segment terminal through a relay satellite and on to a customer/user platform is referred to as a forward link.  The tandem RF/optical signal path from a customer/user platform to the relay satellite and back to a ground terminal is referred to as a return link.
-		</p>
-		<button id = "cont"> Keep Playing </button>
-	</div>
-	<div id = 'pop-quiz_modal' class = 'setHeight' style = "display: none;"></div>
 	<div id = 'level_modal' class = 'setHeight' style = "display: none;">
 		<p>Good job! You successfuly realyed data to enough satellites to level up to the next TDRS...</p>
 		<button id = 'next-to-level' >Next</button>
 	</div>
+
+
 	<div id = 'game_over_modal' class = 'setHeight' style = "display: none;">
 		<p>Game Over!</p>
 		<p>You let too many satellites go by without relaying data!</p>
 		<p>Would you like to play again?</p>
 		<button id = "restart">Restart</button>
 	</div>
+
+
 	<div id = "gen-1-info-modal" class = 'setHeight' style = "display: none;">
 		<p>
 			NASA developed the Tracking and Data Relay Satellites (TDRS) to provide nearly continuous, around-the-clock communications coverage for spacecraft in low-Earth orbit. By the 1970s when the project began in earnest, more than 50 spacecraft required NASA space communications support. The cost of maintaining ground stations was rising and the ground-based networks only achieved coverage during about 15 percent of a spacecraft’s orbit. NASA needed a more efficient network, and they theorized space-based satellites could help resolve these challenges.
@@ -115,6 +126,8 @@
 		<img class = "gen-img" src = "assets/img/gen-1-facts.png"/>
 		<button id = "next-to-info">Next</button>
 	</div>
+
+
 	<div id = "gen-2-info-modal" class = 'setHeight' style = "display: none;">
 		<p>
 			Shortly after the completion of TDRS’s first-generation constellation, the team commissioned a second generation of satellites to implement new technology and to support customers’ evolving requirements. Improvements in data-collection technology required higher-bandwidth connections capable of delivering larger volumes of data per second. TDRS H, I and J would not succeed the first generation of satellites, but join them, expanding the capabilities of the fleet.
@@ -123,6 +136,8 @@
 		<img class = "gen-img"  src = "assets/img/gen-2-facts.png"/>
 		<button id = "next-to-info">Next</button>
 	</div>
+
+
 	<div id = "gen-3-info-modal" class = 'setHeight' style = "display: none;">
 			<p>
 			As NASA began to decommission the first generation of TDRS spacecraft shortly before 2010, the agency commissioned a third generation of spacecraft to replenish the fleet, ensuring its continued operations and reliability for years to come.";
